@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище UkraineModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdvertType">
+          <Key>
+            <PropertyRef Name="a_ID" />
+          </Key>
+          <Property Name="a_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="a_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="a_costPerSecond" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="c_ID" />
+          </Key>
+          <Property Name="c_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="c_phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="c_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="o_ID" />
+          </Key>
+          <Property Name="o_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="o_clientID" Type="int" Nullable="false" />
+          <Property Name="o_adType" Type="int" Nullable="false" />
+          <Property Name="o_managerID" Type="int" Nullable="false" />
+          <Property Name="o_durationInSecond" Type="int" Nullable="false" />
+          <Property Name="o_cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="o_date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="u_ID" />
+          </Key>
+          <Property Name="u_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="u_login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="u_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="u_role" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Order__o_adType__173876EA">
+          <End Role="AdvertType" Type="Self.AdvertType" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdvertType">
+              <PropertyRef Name="a_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_adType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_clientI__164452B1">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="c_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_manager__182C9B23">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="u_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_managerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище UkraineModelContainer">
+          <EntitySet Name="AdvertType" EntityType="Self.AdvertType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Order__o_adType__173876EA" Association="Self.FK__Order__o_adType__173876EA">
+            <End Role="AdvertType" EntitySet="AdvertType" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_clientI__164452B1" Association="Self.FK__Order__o_clientI__164452B1">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_manager__182C9B23" Association="Self.FK__Order__o_manager__182C9B23">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UkraineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdvertType">
+          <Key>
+            <PropertyRef Name="a_ID" />
+          </Key>
+          <Property Name="a_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="a_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="a_costPerSecond" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Order__o_adType__173876EA" FromRole="AdvertType" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="c_ID" />
+          </Key>
+          <Property Name="c_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Order__o_clientI__164452B1" FromRole="Client" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="o_ID" />
+          </Key>
+          <Property Name="o_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="o_clientID" Type="Int32" Nullable="false" />
+          <Property Name="o_adType" Type="Int32" Nullable="false" />
+          <Property Name="o_managerID" Type="Int32" Nullable="false" />
+          <Property Name="o_durationInSecond" Type="Int32" Nullable="false" />
+          <Property Name="o_cost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="o_date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="AdvertType" Relationship="Self.FK__Order__o_adType__173876EA" FromRole="Order" ToRole="AdvertType" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__Order__o_clientI__164452B1" FromRole="Order" ToRole="Client" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Order__o_manager__182C9B23" FromRole="Order" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="u_ID" />
+          </Key>
+          <Property Name="u_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="u_login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="u_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="u_role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Order__o_manager__182C9B23" FromRole="User" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK__Order__o_adType__173876EA">
+          <End Role="AdvertType" Type="Self.AdvertType" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdvertType">
+              <PropertyRef Name="a_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_adType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_clientI__164452B1">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="c_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__o_manager__182C9B23">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="u_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="o_managerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UkraineEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdvertTypes" EntityType="Self.AdvertType" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Order__o_adType__173876EA" Association="Self.FK__Order__o_adType__173876EA">
+            <End Role="AdvertType" EntitySet="AdvertTypes" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_clientI__164452B1" Association="Self.FK__Order__o_clientI__164452B1">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__o_manager__182C9B23" Association="Self.FK__Order__o_manager__182C9B23">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище UkraineModelContainer" CdmEntityContainer="UkraineEntities">
+          <EntitySetMapping Name="AdvertTypes">
+            <EntityTypeMapping TypeName="UkraineModel.AdvertType">
+              <MappingFragment StoreEntitySet="AdvertType">
+                <ScalarProperty Name="a_ID" ColumnName="a_ID" />
+                <ScalarProperty Name="a_type" ColumnName="a_type" />
+                <ScalarProperty Name="a_costPerSecond" ColumnName="a_costPerSecond" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="UkraineModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="c_ID" ColumnName="c_ID" />
+                <ScalarProperty Name="c_name" ColumnName="c_name" />
+                <ScalarProperty Name="c_phone" ColumnName="c_phone" />
+                <ScalarProperty Name="c_email" ColumnName="c_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="UkraineModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="o_ID" ColumnName="o_ID" />
+                <ScalarProperty Name="o_clientID" ColumnName="o_clientID" />
+                <ScalarProperty Name="o_adType" ColumnName="o_adType" />
+                <ScalarProperty Name="o_managerID" ColumnName="o_managerID" />
+                <ScalarProperty Name="o_durationInSecond" ColumnName="o_durationInSecond" />
+                <ScalarProperty Name="o_cost" ColumnName="o_cost" />
+                <ScalarProperty Name="o_date" ColumnName="o_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="UkraineModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="u_ID" ColumnName="u_ID" />
+                <ScalarProperty Name="u_login" ColumnName="u_login" />
+                <ScalarProperty Name="u_password" ColumnName="u_password" />
+                <ScalarProperty Name="u_role" ColumnName="u_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

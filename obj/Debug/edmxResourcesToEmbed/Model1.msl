@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище UkraineModelContainer" CdmEntityContainer="UkraineEntities">
+    <EntitySetMapping Name="AdvertTypes">
+      <EntityTypeMapping TypeName="UkraineModel.AdvertType">
+        <MappingFragment StoreEntitySet="AdvertType">
+          <ScalarProperty Name="a_ID" ColumnName="a_ID" />
+          <ScalarProperty Name="a_type" ColumnName="a_type" />
+          <ScalarProperty Name="a_costPerSecond" ColumnName="a_costPerSecond" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="UkraineModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="c_ID" ColumnName="c_ID" />
+          <ScalarProperty Name="c_name" ColumnName="c_name" />
+          <ScalarProperty Name="c_phone" ColumnName="c_phone" />
+          <ScalarProperty Name="c_email" ColumnName="c_email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="UkraineModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="o_ID" ColumnName="o_ID" />
+          <ScalarProperty Name="o_clientID" ColumnName="o_clientID" />
+          <ScalarProperty Name="o_adType" ColumnName="o_adType" />
+          <ScalarProperty Name="o_managerID" ColumnName="o_managerID" />
+          <ScalarProperty Name="o_durationInSecond" ColumnName="o_durationInSecond" />
+          <ScalarProperty Name="o_cost" ColumnName="o_cost" />
+          <ScalarProperty Name="o_date" ColumnName="o_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="UkraineModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="u_ID" ColumnName="u_ID" />
+          <ScalarProperty Name="u_login" ColumnName="u_login" />
+          <ScalarProperty Name="u_password" ColumnName="u_password" />
+          <ScalarProperty Name="u_role" ColumnName="u_role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

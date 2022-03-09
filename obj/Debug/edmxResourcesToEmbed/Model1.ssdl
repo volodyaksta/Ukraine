@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище UkraineModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AdvertType">
+    <Key>
+      <PropertyRef Name="a_ID" />
+    </Key>
+    <Property Name="a_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="a_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="a_costPerSecond" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="c_ID" />
+    </Key>
+    <Property Name="c_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="c_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="c_phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="c_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="o_ID" />
+    </Key>
+    <Property Name="o_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="o_clientID" Type="int" Nullable="false" />
+    <Property Name="o_adType" Type="int" Nullable="false" />
+    <Property Name="o_managerID" Type="int" Nullable="false" />
+    <Property Name="o_durationInSecond" Type="int" Nullable="false" />
+    <Property Name="o_cost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="o_date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="u_ID" />
+    </Key>
+    <Property Name="u_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="u_login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="u_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="u_role" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Order__o_adType__173876EA">
+    <End Role="AdvertType" Type="Self.AdvertType" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AdvertType">
+        <PropertyRef Name="a_ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="o_adType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order__o_clientI__164452B1">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="c_ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="o_clientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order__o_manager__182C9B23">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="u_ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="o_managerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище UkraineModelContainer">
+    <EntitySet Name="AdvertType" EntityType="Self.AdvertType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Order__o_adType__173876EA" Association="Self.FK__Order__o_adType__173876EA">
+      <End Role="AdvertType" EntitySet="AdvertType" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order__o_clientI__164452B1" Association="Self.FK__Order__o_clientI__164452B1">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order__o_manager__182C9B23" Association="Self.FK__Order__o_manager__182C9B23">
+      <End Role="User" EntitySet="User" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
